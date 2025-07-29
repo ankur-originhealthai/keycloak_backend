@@ -13,11 +13,10 @@ export function jwtAuthMiddleware(
   }
   const token = authHeader.split(' ')[1];
   const publicKey = process.env.PUBLIC_KEY;
-  console.log(publicKey);
+
   try {
     const decoded = jwt.verify(token, publicKey!, { algorithms: ['RS256'] });
     const roles = decoded.realm_access.roles;
-    console.log(decoded);
     req['user'] = {
         email: decoded.email,
         username: decoded.preferred_username,
