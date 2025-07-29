@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { jwtAuthMiddleware } from './middleware/jwt-auth.middleware';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -8,6 +9,8 @@ async function bootstrap() {
       origin: 'http://localhost:3003', //allow the access of api in localhost:3002
       credentials: true,
     });
+
+    app.use(jwtAuthMiddleware)
 
     await app.listen(process.env.PORT ?? 3004);
 }
